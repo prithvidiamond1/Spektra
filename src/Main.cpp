@@ -1,11 +1,10 @@
 
-#include "ALB.h"
+#include "App.h"
 
 int main(int argc, char** argv) {
-	AudioLoopBack ALB_Obj;
-
-	ALB_Obj.ALB_contextAndDeviceInit();
-	ALB_Obj.ALB_run();
+	std::string title = "ALB-Spectrum";
+	App app(title, 1280, 720, argc, argv);
+	app.run();
 
 	return 0;
 }
