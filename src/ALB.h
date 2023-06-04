@@ -28,6 +28,6 @@ public:
 	static void ALB_dataCallback(ma_device* ALB_device, void* ALB_output, const void* ALB_input, ma_uint32 frameCount);
 
 	void ALB_start();
-	void ALB_run();
+	void ALB_FFTdata(float* leftChFFTData, float* rightChFFTData);
 	void ALB_finish();
 };

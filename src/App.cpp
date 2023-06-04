@@ -46,7 +46,61 @@ App::~App()
 
 void App::update()
 {
+    // allocate arrays for left and right channel FFT data
+    float* leftChFFTData = new float[(ALB_Obj.ALB_frameCountPerCallback) / 2];
+    float* rightChFFTData = new float[(ALB_Obj.ALB_frameCountPerCallback) / 2];
 
+    ALB_Obj.ALB_FFTdata(leftChFFTData, rightChFFTData);
+
+    //// Generate frequency values for use as x-axis
+    //int* frequencies = new int[(ALB_Obj.ALB_frameCountPerCallback) / 2];
+    //for (int i = 0; i < (ALB_Obj.ALB_frameCountPerCallback) / 2; i++) {
+    //    frequencies[i] = i + 1;
+    //}
+
+    // Draw graph
+    // Set up ImGUI
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(GetWindowSize(), ImGuiCond_Always);
+    ImGui::Begin("AudioLoopBackSpectrums", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+
+    // Left Channel graph
+    ImGui::BeginChild("LeftChannelSpectrumSection", ImVec2(ImGui::GetWindowContentRegionWidth() * 0.5f, -1));
+    ImGui::Text("Left Channel Spectrum");
+    ImGui::Separator();
+
+    // plot Left Channel data
+    if (ImPlot::BeginPlot("LeftChannelSpectrumPlot", ImVec2(-1,-1))) {
+        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude");
+        // Set Axes Limits here - IGNORE for now
+
+        ImPlot::PlotLine("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback/2), 1, 1);
+
+        ImPlot::EndPlot();
+    }
+
+    ImGui::EndChild();
+
+    // Right Channel graph
+    ImGui::BeginChild("RightChannelSpectrumSection", ImVec2(-1, -1));
+    ImGui::Text("Right Channel Spectrum");
+    ImGui::Separator();
+
+    // plot Left Channel data
+    if (ImPlot::BeginPlot("RightChannelSpectrumPlot", ImVec2(-1, -1))) {
+        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude");
+        // Set Axes Limits here - IGNORE for now
+
+        ImPlot::PlotLine("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2), 1, 1);
+
+        ImPlot::EndPlot();
+    }
+
+    ImGui::EndChild();
+    ImGui::End();
+    
+    delete[] leftChFFTData;
+    delete[] rightChFFTData;
 }
 
 void App::run()
@@ -76,4 +130,11 @@ void App::run()
 
     // ALB finish
     ALB_Obj.ALB_finish();
+}
+
+ImVec2 App::GetWindowSize() const
+{
+    int w, h;
+    glfwGetWindowSize(Window, &w, &h);
+    return ImVec2(w, h);
 }

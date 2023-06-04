@@ -12,6 +12,10 @@
 
 #include <string>
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#pragma comment(lib, "legacy_stdio_definitions")
+#endif
+
 class App {
 private: 
 	GLFWwindow* Window;
@@ -29,4 +33,6 @@ public:
 	void update();
 
 	void run();
+
+	ImVec2 GetWindowSize() const;
 };
