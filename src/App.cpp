@@ -30,6 +30,14 @@ App::App(std::string title, int w, int h, int argc, char** argv)
     glfwMakeContextCurrent(Window);
 
     glfwSetWindowTitle(Window, title.c_str());
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImPlot::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(Window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
+
     
     ClearColor = ImVec4(0.15f, 0.16f, 0.21f, 1.00f);
 }
