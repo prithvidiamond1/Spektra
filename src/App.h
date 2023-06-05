@@ -26,6 +26,7 @@ private:
 
 	AudioLoopBack ALB_Obj;
 
+	void StyeColorsApp();
 
 public:
 	App(std::string title, int w, int h, int argc, char** argv);
