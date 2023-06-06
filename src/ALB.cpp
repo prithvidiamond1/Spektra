@@ -60,29 +60,6 @@ void AudioLoopBack::ALB_FFTdata(float* leftChFFTData, float* rightChFFTData)
 {
 	// EVENTS HERE MUST OCCUR AS PART OF A LOOP
 
-	// Perform main audio operations here
-
-
-	/*std::vector<float> leftFFTPlotData;
-	std::vector<float> rightFFTPlotData;
-
-	for (int i = 0; i < (ALB_frameCountPerCallback / 2); i++) {
-		leftFFTPlotData.push_back(0);
-		rightFFTPlotData.push_back(0);
-	}
-
-	auto ax1 = matplot::subplot(2, 1, 0);
-	auto ax2 = matplot::subplot(2, 1, 1);
-
-	ax1->title("Left Channel FFT");
-	ax1->xlabel("Frequencies (Hz)");
-	ax1->ylabel("Amplitude");
-
-	ax2->title("Right Channel FFT");
-	ax2->xlabel("Frequencies (Hz)");
-	ax2->ylabel("Amplitude");*/
-
-
 	// Previous main loop was from here to the bottom of this method
 	void* ALB_deinterleavedLeftData = new float[ALB_frameCountPerCallback];
 	void* ALB_deinterleavedRightData = new float[ALB_frameCountPerCallback];
@@ -127,19 +104,6 @@ void AudioLoopBack::ALB_FFTdata(float* leftChFFTData, float* rightChFFTData)
 
 	FFT_complexArrToAbsoluteArr(leftChannelFFTOut, (ALB_frameCountPerCallback / 2) + 1, leftChannelFFTAbs, true);
 	FFT_complexArrToAbsoluteArr(rightChannelFFTOut, (ALB_frameCountPerCallback / 2) + 1, rightChannelFFTAbs, true);
-
-	// Draw 2 plots, one for each channel to see what is going on
-
-	/*for (int i = 0; i < (ALB_frameCountPerCallback / 2); i++) {
-		leftFFTPlotData[i] = leftChannelFFTAbs[i];
-		rightFFTPlotData[i] = rightChannelFFTAbs[i];
-	}
-
-	ax1->plot(leftFFTPlotData);
-	ax2->plot(rightFFTPlotData);
-
-	ax1->draw();
-	ax2->draw();*/
 
 	// copy to output arrays
 	for (int i = 0; i < (ALB_frameCountPerCallback / 2); i++) {

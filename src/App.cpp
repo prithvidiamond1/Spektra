@@ -194,15 +194,19 @@ void App::update()
         ImPlot::SetupAxes("Frequency (Hz)", "Amplitude");
         // Set Axes Limits here - IGNORE for now
 
-        ImPlot::PlotLine("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback/2), 1, 1);
+        //ImPlot::PlotLine("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback/2), 1, 1);
+        ImPlot::PlotBars("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2));
 
         ImPlot::EndPlot();
     }
 
     ImGui::EndChild();
 
+
+    ImGui::SameLine();
+
     // Right Channel graph
-    ImGui::BeginChild("RightChannelSpectrumSection", ImVec2(-1, -1));
+    ImGui::BeginChild("RightChannelSpectrumSection", ImVec2(0, -1));
     ImGui::Text("Right Channel Spectrum");
     ImGui::Separator();
 
@@ -211,7 +215,8 @@ void App::update()
         ImPlot::SetupAxes("Frequency (Hz)", "Amplitude");
         // Set Axes Limits here - IGNORE for now
 
-        ImPlot::PlotLine("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2), 1, 1);
+        //ImPlot::PlotLine("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2), 1, 1);
+        ImPlot::PlotBars("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2));
 
         ImPlot::EndPlot();
     }

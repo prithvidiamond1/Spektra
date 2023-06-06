@@ -2,7 +2,6 @@
 
 #include "miniaudio.h"
 #include "fftw3.h"
-#include "matplot/matplot.h"
 
 #include <iostream>
 #include <vector>
@@ -20,7 +19,7 @@ private:
 
 public:
 	const int ALB_callbackPeriodMs = 1000;
-	const int ALB_captureSampleRate = 48000;
+	const int ALB_captureSampleRate = 48000 * (1000 / ALB_callbackPeriodMs);	// The first integer is the rate per callback
 	const int ALB_captureChannelCount = 2;
 	const ma_format ALB_captureFormat = ma_format_f32;
 	const ma_uint32 ALB_frameCountPerCallback = ALB_captureSampleRate / (1000 / ALB_callbackPeriodMs);
