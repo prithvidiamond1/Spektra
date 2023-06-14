@@ -152,6 +152,11 @@ App::App(std::string title, int w, int h, int argc, char** argv)
 
     ImGui::StyleColorsDark();
     ImPlot::StyleColorsDark();
+
+    OBA_Obj.setParams(8, ALB_Obj.ALB_captureSampleRate, 3, 20, 20000);
+    OBA_Obj.setup();
+
+    this->bandCenterFreqs = OBA_Obj.getCenterFreqsOfBands();
 }
 
 App::~App()
@@ -166,17 +171,25 @@ App::~App()
 
 void App::update()
 {
-    // allocate arrays for left and right channel FFT data
-    float* leftChFFTData = new float[(ALB_Obj.ALB_frameCountPerCallback) / 2];
-    float* rightChFFTData = new float[(ALB_Obj.ALB_frameCountPerCallback) / 2];
+    //// allocate arrays for left and right channel FFT data
+    //float* leftChFFTData = new float[(ALB_Obj.ALB_sampleCountPerCallback) / 2];
+    //float* rightChFFTData = new float[(ALB_Obj.ALB_sampleCountPerCallback) / 2];
 
-    ALB_Obj.ALB_FFTdata(leftChFFTData, rightChFFTData);
+    std::vector<float> leftChData, rightChData;
+
+    ALB_Obj.ALB_getAudioData(leftChData, rightChData);
 
     //// Generate frequency values for use as x-axis
     //int* frequencies = new int[(ALB_Obj.ALB_frameCountPerCallback) / 2];
     //for (int i = 0; i < (ALB_Obj.ALB_frameCountPerCallback) / 2; i++) {
     //    frequencies[i] = i + 1;
     //}
+
+    // Process the Audio Data
+    std::vector<float> leftChOut, rightChOut;
+
+    OBA_Obj.analyseFrames(leftChData, leftChOut);
+    OBA_Obj.analyseFrames(rightChData, rightChOut);
 
     // Draw graph
     // Set up ImGUI
@@ -195,7 +208,7 @@ void App::update()
         // Set Axes Limits here - IGNORE for now
 
         //ImPlot::PlotLine("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback/2), 1, 1);
-        ImPlot::PlotBars("LeftAmplitudeCurve", leftChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2));
+        ImPlot::PlotBars("LeftAmplitudeCurve", this->bandCenterFreqs.data(), leftChOut.data(), leftChOut.size(), 1);
 
         ImPlot::EndPlot();
     }
@@ -216,7 +229,7 @@ void App::update()
         // Set Axes Limits here - IGNORE for now
 
         //ImPlot::PlotLine("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2), 1, 1);
-        ImPlot::PlotBars("RightAmplitudeCurve", rightChFFTData, (ALB_Obj.ALB_frameCountPerCallback / 2));
+        ImPlot::PlotBars("RightAmplitudeCurve", this->bandCenterFreqs.data(), rightChOut.data(), rightChOut.size(), 1);
 
         ImPlot::EndPlot();
     }
@@ -224,8 +237,8 @@ void App::update()
     ImGui::EndChild();
     ImGui::End();
     
-    delete[] leftChFFTData;
-    delete[] rightChFFTData;
+    //delete[] leftChFFTData;
+    //delete[] rightChFFTData;
 }
 
 void App::run()
