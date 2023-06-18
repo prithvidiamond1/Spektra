@@ -3,9 +3,6 @@
 #include "Iir.h"
 
 #include <cmath>
-#include <algorithm>
-#include <numeric>
-#include <functional>
 
 using namespace Iir;
 
@@ -22,14 +19,12 @@ private:
 
 	std::vector<float> centerFreqsOfBands;
 
-	Butterworth::BandPass<8> bandPassFilter;
+	Butterworth::BandPass<> bandPassFilter;
 public:
 	OctaveBandAnalyser();	// default constructor
 
 	void setParams(int filterOrder, int sampleRate, int bandsPerOctave, float lowerLimitOfFreqRange,
 		float upperLimitOfFreqRange, float refFrequency = 1000.0f);
-
-	void setup();
 
 	std::vector<float> getCenterFreqsOfBands();
 

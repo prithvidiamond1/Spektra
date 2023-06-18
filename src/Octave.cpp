@@ -11,15 +11,12 @@ void OctaveBandAnalyser::setParams(int filterOrder, int sampleRate, int bandsPer
 	this->lowerLimitOfFreqRange = lowerLimitOfFreqRange;
 	this->upperLimitOfFreqRange = upperLimitOfFreqRange;
 	this->refFrequency = refFrequency;
-}
 
-void OctaveBandAnalyser::setup()
-{
 	int lowerN = (int)std::roundf(this->bandsPerOctave * std::log2f(this->lowerLimitOfFreqRange / this->refFrequency));
 	int upperN = (int)std::roundf(this->bandsPerOctave * std::log2f(this->upperLimitOfFreqRange / this->refFrequency));
 
 	for (int n = lowerN; n <= upperN; n++) {
-		float centerFreq = this->refFrequency * std::powf(2, (n / bandsPerOctave));
+		float centerFreq = this->refFrequency * std::powf(2, ((float)n / bandsPerOctave));
 		this->centerFreqsOfBands.push_back(centerFreq);
 	}
 }
@@ -31,7 +28,6 @@ std::vector<float> OctaveBandAnalyser::getCenterFreqsOfBands()
 
 void OctaveBandAnalyser::analyseFrames(std::vector<float>& inputFrames, std::vector<float>& outputVals)
 {
-	std::vector<float> filteredRMS;
 	for (int i = 0; i < this->centerFreqsOfBands.size(); i++) {
 		float centerFreqOfBand = this->centerFreqsOfBands[i];
 		float bandConst = std::sqrtf(std::powf(2, (1.0f / this->bandsPerOctave)));
@@ -40,16 +36,16 @@ void OctaveBandAnalyser::analyseFrames(std::vector<float>& inputFrames, std::vec
 
 		this->bandPassFilter.setup(this->filterOrder, this->sampleRate, centerFreqOfBand, upperCutoffFreqOfBand - lowerCutoffFreqOfBand);
 		
-		double filteredMS = 0;
+		float squaredSum = 0;
 		for (int i = 0; i < inputFrames.size(); i++) {
 			float filteredFrame = this->bandPassFilter.filter(inputFrames[i]);
-			filteredMS += std::pow(filteredFrame, 2);
+			squaredSum += std::powf(filteredFrame, 2);
 		}
 
-		double rms = std::sqrt(filteredMS);
+		float rms = std::sqrtf(squaredSum / inputFrames.size());
 
-		filteredRMS.push_back(rms);
+		float dB = 20 * std::log10f(rms + 1e-6);
+
+		outputVals.push_back(rms);
 	}
-
-	outputVals = std::vector<float>(filteredRMS.data(), filteredRMS.data() + filteredRMS.size());
 }
