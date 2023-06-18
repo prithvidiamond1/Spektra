@@ -44,8 +44,9 @@ void OctaveBandAnalyser::analyseFrames(std::vector<float>& inputFrames, std::vec
 
 		float rms = std::sqrtf(squaredSum / inputFrames.size());
 
-		float dB = 20 * std::log10f(rms + 1e-6);
+		const float floorVal = 1e-5;
+		float dBFS = (20 * std::log10f(rms + floorVal)) - 20*std::log10f(floorVal);	// 1e-6 = floor value
 
-		outputVals.push_back(rms);
+		outputVals.push_back(dBFS);
 	}
 }

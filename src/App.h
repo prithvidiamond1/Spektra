@@ -31,8 +31,6 @@ private:
 
 	std::vector<float> bandCenterFreqs;
 
-	void StyeColorsApp();
-
 public:
 	App(std::string title, int w, int h, int argc, char** argv);
 
