@@ -11,6 +11,7 @@
 #include "imgui_impl_opengl3.h"
 
 #include "ALB.h";
+#include "Octave.h";
 
 #include <string>
 
@@ -26,7 +27,9 @@ private:
 
 	AudioLoopBack ALB_Obj;
 
-	void StyeColorsApp();
+	OctaveBandAnalyser OBA_Obj;	// set filter order here
+
+	std::vector<float> bandCenterFreqs;
 
 public:
 	App(std::string title, int w, int h, int argc, char** argv);
