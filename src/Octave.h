@@ -28,7 +28,7 @@ public:
 
 	std::vector<float> getCenterFreqsOfBands();
 
-	void analyseFrames(std::vector<float>& inputFrames, std::vector<float>& outputVals);
+	void analyseFrames(const std::vector<float>& inputFrames, std::vector<float>& outputVals);
 
 };
 

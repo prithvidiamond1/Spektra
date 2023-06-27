@@ -91,8 +91,8 @@ void App::update()
 
     // plot Left Channel data
     if (ImPlot::BeginPlot("LeftChannelSpectrumPlot", ImVec2(-1,-1))) {
-        ImPlot::SetupAxesLimits(16, ALB_Obj.ALB_captureSampleRate / 2, 1, 100);
-        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude (dB)");
+        ImPlot::SetupAxesLimits(16, ALB_Obj.ALB_captureSampleRate / 2, -100, 0);
+        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude (dB)", 0, ImPlotAxisFlags_Invert);
         ImPlot::SetupAxisScale(ImAxis_X1, ImPlotScale_SymLog);
         //ImPlot::SetupAxisScale(ImAxis_Y1, ImPlotScale_Log10);
 
@@ -113,8 +113,8 @@ void App::update()
 
     // plot Right Channel data
     if (ImPlot::BeginPlot("RightChannelSpectrumPlot", ImVec2(-1, -1))) {
-        ImPlot::SetupAxesLimits(16, ALB_Obj.ALB_captureSampleRate / 2, 1, 100);
-        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude (dB)");
+        ImPlot::SetupAxesLimits(16, ALB_Obj.ALB_captureSampleRate / 2, -100, 0);
+        ImPlot::SetupAxes("Frequency (Hz)", "Amplitude (dB)", 0, ImPlotAxisFlags_Invert);
         ImPlot::SetupAxisScale(ImAxis_X1, ImPlotScale_SymLog);
         //ImPlot::SetupAxisScale(ImAxis_Y1, ImPlotScale_Log10);
 
