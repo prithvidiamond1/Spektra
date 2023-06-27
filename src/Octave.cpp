@@ -26,7 +26,7 @@ std::vector<float> OctaveBandAnalyser::getCenterFreqsOfBands()
 	return this->centerFreqsOfBands;
 }
 
-void OctaveBandAnalyser::analyseFrames(std::vector<float>& inputFrames, std::vector<float>& outputVals)
+void OctaveBandAnalyser::analyseFrames(const std::vector<float>& inputFrames, std::vector<float>& outputVals)
 {
 	for (int i = 0; i < this->centerFreqsOfBands.size(); i++) {
 		float centerFreqOfBand = this->centerFreqsOfBands[i];
