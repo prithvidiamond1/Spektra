@@ -28,9 +28,10 @@ std::vector<float> OctaveBandAnalyser::getCenterFreqsOfBands()
 
 void OctaveBandAnalyser::analyseFrames(const std::vector<float>& inputFrames, std::vector<float>& outputVals)
 {
+	float bandConst = std::sqrtf(std::powf(2, (1.0f / this->bandsPerOctave)));
+
 	for (int i = 0; i < this->centerFreqsOfBands.size(); i++) {
 		float centerFreqOfBand = this->centerFreqsOfBands[i];
-		float bandConst = std::sqrtf(std::powf(2, (1.0f / this->bandsPerOctave)));
 		float lowerCutoffFreqOfBand = centerFreqOfBand / bandConst;
 		float upperCutoffFreqOfBand = centerFreqOfBand * bandConst;
 
@@ -45,7 +46,7 @@ void OctaveBandAnalyser::analyseFrames(const std::vector<float>& inputFrames, st
 		float rms = std::sqrtf(squaredSum / inputFrames.size());
 
 		const float floorVal = 1e-5;
-		float dBFS = -((20 * std::log10f(rms + floorVal)) - 20*std::log10f(floorVal));	// 1e-6 = floor value
+		float dBFS = -((20 * std::log10f(rms + floorVal)) - 20*std::log10f(floorVal));	// 1e-5 = floor value
 
 		outputVals.push_back(dBFS);
 	}

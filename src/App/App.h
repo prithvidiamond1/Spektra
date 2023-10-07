@@ -7,11 +7,12 @@
 #include "imgui.h"
 #include "implot.h"
 #include "imgui_internal.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "../OpenGL/Imgui/imgui_impl_glfw.h"
+#include "../OpenGL/Imgui/imgui_impl_opengl3.h"
 
-#include "ALB.h";
-#include "Octave.h";
+#include "../AudioLoopBack/ALB.h"
+#include "../BandAnalyzers/Octave/Octave.h"
+#include "../BandAnalyzers/FFT/FFT.h"
 
 #include <string>
 
@@ -28,6 +29,8 @@ private:
 	AudioLoopBack ALB_Obj;
 
 	OctaveBandAnalyser OBA_Obj;	// set filter order here
+
+	FFTBandAnalyzer FFT_Obj;
 
 	std::vector<float> bandCenterFreqs;
 

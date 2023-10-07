@@ -13,6 +13,7 @@ private:
 
 public:
 	const int ALB_callbackPeriodMs = 64;
+	const int ALB_callbackPeriodFrames = 8192;
 	const int ALB_captureSampleRate = 48000;
 	const int ALB_captureChannelCount = 2;
 	const ma_format ALB_captureFormat = ma_format_f32;

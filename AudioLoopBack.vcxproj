@@ -143,22 +143,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\App.cpp" />
-    <ClCompile Include="src\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\App\App.cpp" />
+    <ClCompile Include="src\BandAnalyzers\FFT\FFT.cpp" />
+    <ClCompile Include="src\BandAnalyzers\FFT\minfft\minfft.c" />
+    <ClCompile Include="src\OpenGL\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\OpenGL\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\ALB.cpp" />
-    <ClCompile Include="src\miniaudio_init.c" />
-    <ClCompile Include="src\Octave.cpp" />
+    <ClCompile Include="src\AudioLoopBack\ALB.cpp" />
+    <ClCompile Include="src\AudioLoopBack\miniaudio_init.c" />
+    <ClCompile Include="src\BandAnalyzers\Octave\Octave.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\App.h" />
-    <ClInclude Include="src\ALB.h" />
-    <ClInclude Include="src\imgui_impl_glfw.h" />
-    <ClInclude Include="src\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="src\miniaudio.h" />
-    <ClInclude Include="src\Octave.h" />
+    <ClInclude Include="src\App\App.h" />
+    <ClInclude Include="src\AudioLoopBack\ALB.h" />
+    <ClInclude Include="src\BandAnalyzers\FFT\FFT.h" />
+    <ClInclude Include="src\BandAnalyzers\FFT\minfft\minfft.h" />
+    <ClInclude Include="src\OpenGL\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\OpenGL\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\OpenGL\Imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\AudioLoopBack\miniaudio.h" />
+    <ClInclude Include="src\BandAnalyzers\Octave\Octave.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

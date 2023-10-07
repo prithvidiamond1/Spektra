@@ -28,7 +28,8 @@ void AudioLoopBack::ALB_start()
 	ALB_deviceConfig.sampleRate = ALB_captureSampleRate;
 	ALB_deviceConfig.dataCallback = ALB_dataCallback;
 	ALB_deviceConfig.pUserData = ALB_rawData;
-	ALB_deviceConfig.periodSizeInMilliseconds = ALB_callbackPeriodMs;
+	//ALB_deviceConfig.periodSizeInMilliseconds = ALB_callbackPeriodMs;
+	ALB_deviceConfig.periodSizeInFrames = ALB_callbackPeriodFrames;
 
 	/* Loopback mode is currently only supported on WASAPI. */
 	ma_backend backends[] = {
